@@ -6,9 +6,13 @@ This program allows the user to get educational articles/papers from internet an
 The following details are retrieved and recorded in the process:
 1. DOI
 2. Title
-3. URL
-4. File Name
-5. File Path
+3. Author
+4. Publisher
+5. Year
+6. URL
+7. File Name
+8. File Path
+9. Citation
 
 #### INSTRUCTIONS
 1. Collect the DOIs of the articles you want to obtain and list them one DOI per line in a Text file *(*.txt)*.
