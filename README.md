@@ -2,7 +2,7 @@
 This program can be used to get educational articles/papers from internet with an input of set DOI links in a text file. The retrieved data can be downloaded in a specified folder. The downloaded files are saved in the selected folder and their details are saved in an **Excel file**. This program uses ***Beautifulsoup*** to get response from ***Sci-Hub*** site.
 
 ## DOI-Scraper v1
-This program allows the user to get educational articles/papers from internet and download the pdf files to a mentioned folder.<br/> The input is given in the form of a text file containing **DOI links** ***(one link per line)***. The output details are recorded in an **Excel file**.
+This program allows the user to get educational articles/papers from internet and download the pdf files to a mentioned folder.<br/> The input is given in the form of a text file containing **DOI links** ***(one link per line)***. The output details are recorded in an **Excel file**.<br/>
 The following details are retrieved and recorded in the process:
 1. DOI
 2. Title
