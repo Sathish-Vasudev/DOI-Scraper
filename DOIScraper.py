@@ -7,8 +7,12 @@ from bs4 import BeautifulSoup
 
 #DECLARATIONS
 doislist = list()
+citlist = list()
 doislistf = list()
 titlelist = list()
+authlist = list()
+publist = list()
+yrlist = list()
 filelist = list()
 filepathlist = list()
 urllist = list()
@@ -29,7 +33,15 @@ while True:
     #GETTING THE FILE NAME WITH DOI LINKS
     linksfile = input("Enter the name of the text file that contains the DOI links or enter the full file location: \n")
     doislist.clear()
+    citlist.clear()
+    doislistf.clear()
     titlelist.clear()
+    authlist.clear()
+    publist.clear()
+    yrlist.clear()
+    filelist.clear()
+    filepathlist.clear()
+    urllist.clear()
     try:
         fileh = open(linksfile)
         for line in fileh :
@@ -47,7 +59,7 @@ while True:
     if n2nfrmt == -1 :
         if noflinks2process == 'A':
             nofl2pstrt = 0
-            nofl2pstp = len(linkslist)
+            nofl2pstp = len(doislist)
             print("The number of links to be processed is" ,nofl2pstp)
             printlinks(0,nofl2pstp)
         elif int(noflinks2process) < totlinksinfile:
@@ -55,7 +67,7 @@ while True:
             nofl2pstp = int(noflinks2process)
             print("The number of links to be processed is" ,nofl2pstp)
             printlinks(0,nofl2pstp)
-        elif int(noflinks2process) == len(linkslist):
+        elif int(noflinks2process) == len(doislist):
             nofl2pstrt = 0
             nofl2pstp = int(noflinks2process)
             print("The number of links to be processed is" ,nofl2pstp)
@@ -102,7 +114,7 @@ while True:
             
             #GET TITLE
             titl = soup.find("div", id ="citation").text
-            titlelist.append(titl)
+            citlist.append(titl)
             
             #GET ARTICLE
             artcl = soup.find("iframe", id ="pdf")
@@ -139,15 +151,41 @@ while True:
                 continue   
 
     print("Generating Excel file...")
-    dat = {'DOI':doislistf,'TITLE':titlelist,'URL':urllist,
-       'FILE NAME':filelist,'FILE PATH':filepathlist}
-    datf = pd.DataFrame(dat,columns = ['DOI','TITLE','FILE NAME','URL','FILE PATH'])
+    for tit in citlist:
+        if len(tit)>10:
+            authi = tit.index("(")
+            auth = tit[0:authi-1:]
+            authlist.append(auth)
+            tit = tit[authi:len(tit):]
+            titlesi = tit.index(")")
+            yr = tit[1:titlesi:]
+            yrlist.append(yr)
+            tit = tit[titlesi+2:len(tit):]
+            titleni = tit.index(".")
+            title = tit[0:titleni:]
+            titlelist.append(title)
+            tit = tit[titleni+2:len(tit):]
+            pubeni = tit.index(".")
+            pub = tit[0:pubeni:]
+            publist.append(pub)
+        else:
+            authlist.append("No Data Available")
+            titlelist.append("No Data Available")
+            publist.append("No Data Available")
+            yrlist.append("No Data Available")
+   dat = {'DOI':doislistf,'TITLE':titlelist,'AUTHOR':authlist,
+            'PUBLISHER':publist,'YEAR':yrlist,'URL':urllist,'FILE NAME':filelist,
+            'FILE PATH':filepathlist,'CITATION':citlist}
+    datf = pd.DataFrame(dat,columns = ['DOI','TITLE','AUTHOR','PUBLISHER','YEAR','URL','FILE NAME','FILE PATH','CITATION'])
     excelw = pd.ExcelWriter(filepath + foldrname + "downloadedfiles.xlsx", engine='xlsxwriter')
     datf.to_excel(excelw,sheet_name='Sheet1',index = False)
     workbook = excelw.book
     worksheet =  excelw.sheets['Sheet1']
     format = workbook.add_format({'text_wrap': True,'valign':'vcenter', 'align':'center','font_size':12})
     worksheet.set_column('A:A', 15, format)
-    worksheet.set_column('B:E',35,format)
+    worksheet.set_column('B:D',35,format)
+    worksheet.set_column('E:E',10,format)
+    worksheet.set_column('F:H',35,format)
+    worksheet.set_column('I:I',60,format)
     excelw.save()
     print("ALL DONE")
