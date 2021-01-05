@@ -21,3 +21,6 @@ The following details are retrieved and recorded in the process:
 4. Provide a folder name where the pdf files can be downloaded ***(Currently a subfolder in the working directory)***.
 5. Once the process is completed, the retrieved DOIs will be listed after downloading the same  <br/> to the given location.
 6. The details of the downloaded files are stored in an **Excel file**.
+
+#### NOTE 
+If you are running the program for the first time, run the ***prereqs.py*** file before executing the program, it will install all the necessary modules.
