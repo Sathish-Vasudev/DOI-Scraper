@@ -57,37 +57,26 @@ while True:
     noflinks2process = input("\nHow many links from the first would you like to process? \n[Use N or N-N Format or Use 'A' for All Links(Time Consuming, More Computation)] \n")
     n2nfrmt = noflinks2process.find("-")
     if n2nfrmt == -1 :
+        nofl2pstrt = 0
         if noflinks2process == 'A':
-            nofl2pstrt = 0
             nofl2pstp = len(doislist)
-            print("The number of links to be processed is" ,nofl2pstp)
-            printlinks(0,nofl2pstp)
         elif int(noflinks2process) < totlinksinfile:
-            nofl2pstrt = 0
-            nofl2pstp = int(noflinks2process)
-            print("The number of links to be processed is" ,nofl2pstp)
-            printlinks(0,nofl2pstp)
+            nofl2pstp = int(noflinks2process)           
         elif int(noflinks2process) == len(doislist):
-            nofl2pstrt = 0
             nofl2pstp = int(noflinks2process)
-            print("The number of links to be processed is" ,nofl2pstp)
-            printlinks(0,nofl2pstp)
         else:    
             print("ERROR: The number of links provided are greater than the number of links in the file.")
             continue
+        print("The number of links to be processed is" ,nofl2pstp)
+        printlinks(0,nofl2pstp)
     else:
-        nofl2pstrt = int(noflinks2process[0:n2nfrmt])
+        nofl2pstrt = int(noflinks2process[0:n2nfrmt])-1
         nofl2pstp = int(noflinks2process[n2nfrmt+1:len(noflinks2process)])
         if nofl2pstp < nofl2pstrt:
             print("ERROR: The number of links to stop the process is less than the number of link to start the process.")
             continue
-        elif nofl2pstrt == 1:
-            nofl2pstrt = 0
-            print("Start of the link to process is", int(nofl2pstrt))
-            print("End of the link to process is", int(nofl2pstp))
-            printlinks(nofl2pstrt,nofl2pstp)
         else:    
-            print("Start of the link to process is", int(nofl2pstrt))
+            print("Start of the link to process is", int(nofl2pstrt)+1)
             print("End of the link to process is", int(nofl2pstp))
             printlinks(nofl2pstrt,nofl2pstp)
 
