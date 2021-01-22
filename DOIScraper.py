@@ -74,11 +74,10 @@ while True:
         nofl2pstp = int(noflinks2process[n2nfrmt+1:len(noflinks2process)])
         if nofl2pstp < nofl2pstrt:
             print("ERROR: The number of links to stop the process is less than the number of link to start the process.")
-            continue
-        else:    
-            print("Start of the link to process is", int(nofl2pstrt)+1)
-            print("End of the link to process is", int(nofl2pstp))
-            printlinks(nofl2pstrt,nofl2pstp)
+            continue 
+        print("Start of the link to process is", int(nofl2pstrt)+1)
+        print("End of the link to process is", int(nofl2pstp))
+        printlinks(nofl2pstrt,nofl2pstp)
 
     #GETTING THE FOLDER NAME AND CREATING FOLDER FOR DOWNLOADS
     foldrname = input("Enter the name of the folder to download the pdfs: \n")
