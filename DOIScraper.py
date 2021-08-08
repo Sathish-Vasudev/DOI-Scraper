@@ -105,7 +105,8 @@ while True:
             citlist.append(titl)
             
             #GET ARTICLE
-            artcl = soup.find("iframe", id ="pdf")
+            artcl = soup.find("div", id ="article")
+            artcl = soup.find("embed", id ="pdf")
             artlnk = artcl['src']
             artlnki = artlnk.rindex('f')
             artlnk = artlnk[0:artlnki+1:]
